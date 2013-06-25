@@ -26,6 +26,6 @@ AutoTimestamp
       	);
 
 
-      协作类
+协作类
 ----------------
 AR  : 该行为对象附加的主体（attach to owner）
