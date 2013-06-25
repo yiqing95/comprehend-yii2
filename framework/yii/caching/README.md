@@ -36,14 +36,14 @@ $cache['myKey'] = 'myValue';  这样到等价存储方法$cache->set('myKey','my
 
 支持的底层缓存引擎
 --------------------
-> zendDataCache
-> XCache
-> WinCache  微软还对php有这个支持 意想不到哦！ [WinCache PHP extension](http://www.iis.net/expand/wincacheforphp)
-> MemCache  同时支持Memcache和Memcached 两种缓存类型 可配置多个服务器 
-> APC 
-> DummyCache 哑cache  模拟了cache的功能 可以在开发时用此哑实现（占位符） 部署时替换为真正的缓存实现
-> DbCache  数据库缓存 这个看似没有必要 其实不然  缓存的基本思路就是把更慢的数据放到稍快的存储介质中。一般我们缓存的会是DB中的数据 但有些数据的获取可能比访问DB还慢。默认此缓存会用来存储session数据的！
-> FileCache 文件缓存实现
+* zendDataCache
+* XCache
+* WinCache  微软还对php有这个支持 意想不到哦！ [WinCache PHP extension](http://www.iis.net/expand/wincacheforphp)
+* MemCache  同时支持Memcache和Memcached 两种缓存类型 可配置多个服务器 
+* APC 
+* DummyCache 哑cache  模拟了cache的功能 可以在开发时用此哑实现（占位符） 部署时替换为真正的缓存实现
+* DbCache  数据库缓存 这个看似没有必要 其实不然  缓存的基本思路就是把更慢的数据放到稍快的存储介质中。一般我们缓存的会是DB中的数据 但有些数据的获取可能比访问DB还慢。默认此缓存会用来存储session数据的！
+* FileCache 文件缓存实现
 
 以上实现 有些是对已有缓存函数/驱动 的简单封装（适配器设计模式 简单委托 一端符合Yii Cache 接口的要求 另一端调用底层已有的驱动函数）
 
@@ -51,8 +51,8 @@ $cache['myKey'] = 'myValue';  这样到等价存储方法$cache->set('myKey','my
 --------------------
 缓存依赖 缓存的失效与否先要计算该依赖  依赖的数据也被存入缓存中 每次取时会实时比较缓存中的依赖数据跟当下计算的数据是否一致 如果不一致认为失效！
 换言之就是：存入时的缓存依赖计算（set） 跟取出时的缓存依赖计算（get） 二者只要不一致认为缓存失效！
-> DbDependency 计算sql语句的单条返回结果 
-> ExpressionDependency 可以给一个php表达式 底层用到了eval！
-> FileDependency 给定一个文件路径 依赖于文件的最后修改时间
-> GroupDependency 静态归组 多个缓存可以依赖一个 组依赖 这个特征很像Yii官方扩展中的Flushable扩展。静态方法invalidate可以让依赖同一个“组依赖”的所有缓存失效！注意在1.x中ar的内置缓存实现 由于很难手动让其失效（你很难知道那个缓存键--缓存要失效或者过期或者手动用这个键让其消失 但前提是你知道那个键），此时用Flashable或者这里的GroupDependency 就可以了 。
-> ChainedDependency 链式缓存依赖  可以传递多个不同类型的依赖形成一个链 属性dependOnAll 可以用来告诉最终决定缓存过期是否取决于所有成员 默认是true 即所有成员的计算结果为失效整个依赖算才算失效。 否则任何一个成员失效整体都算失效！
+* DbDependency 计算sql语句的单条返回结果 
+* ExpressionDependency 可以给一个php表达式 底层用到了eval！
+* FileDependency 给定一个文件路径 依赖于文件的最后修改时间
+* GroupDependency 静态归组 多个缓存可以依赖一个 组依赖 这个特征很像Yii官方扩展中的Flushable扩展。静态方法invalidate可以让依赖同一个“组依赖”的所有缓存失效！注意在1.x中ar的内置缓存实现 由于很难手动让其失效（你很难知道那个缓存键--缓存要失效或者过期或者手动用这个键让其消失 但前提是你知道那个键），此时用Flashable或者这里的GroupDependency 就可以了 。
+* ChainedDependency 链式缓存依赖  可以传递多个不同类型的依赖形成一个链 属性dependOnAll 可以用来告诉最终决定缓存过期是否取决于所有成员 默认是true 即所有成员的计算结果为失效整个依赖算才算失效。 否则任何一个成员失效整体都算失效！
