@@ -12,8 +12,8 @@ Widget类是yii 或者你的app中的所有widget的基类
 
 ## 方法
 -----
-_ 静态begin方法用来开始本类widget实例的创建 参数是widget的配置属性，这个方法
-  等价yii1.x 中的$this->beginWidget 但可获得IDE的智能提示的有点。
+-  静态begin方法用来开始本类widget实例的创建 参数是widget的配置属性，这个方法
+   等价yii1.x 中的$this->beginWidget 但可获得IDE的智能提示的有点。
   
 - 静态方法end 用来结束widget 其输出直接渲染。
 - begin和end之间经常输出纯的html代码。
