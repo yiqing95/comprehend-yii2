@@ -20,3 +20,16 @@ Widget类是yii 或者你的app中的所有widget的基类
 _ 静态widget方法使用配置数组来创建本类实例 并返回渲染的字符串；该类是Yii1.x中控制器(BaseController::)widget方法的替代出现
   拥有IDE智能提示的优点。
 
++ 私有的id属性 表示该widget实例的id
++ getId方法用来生成该实例的id
++ setId方法设置它的id
+
++ 私有view 表示该widget渲染时的视图对象
++ getView getter方法 如果没有手动设置那么返回系统的视图组件
++ setView 是私有view属性的setter方法
+
++ run方法是留给资料复写的 主要用来执行渲染 该方法可以使用render来渲染指定的视图文件
++ render方法可以用一个数组作为参数来渲染指定的视图文件 在视图文件中数组会被展平 其key可以直接被使用
+  该方法一般会在run方法中被调用 
++ renderFile 方法用指定的参数渲染一个文件 区别于render方法的是它使用文件路径而不是逻辑名渲染
++ getViewPath 返回本类实例的视图的基本路径 内部使用反射 路径是本类所在目录下的views目录
